@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "RandomWalker.h"  //追加するクラスのヘッダーを読み込む
+#include "RandomWalker.h"
 #include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
@@ -23,10 +23,14 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    static const int walkerNum = 50000;
-    RandomWalker walker[walkerNum];
+    static const int NUM = 50000;
+    RandomWalker walker[NUM];
+   
+    ofxPanel gui;
+    ofxFloatSlider size;
+    ofxFloatSlider pointAlpha;
+    ofxFloatSlider bgAlpha;
     ofVboMesh mesh;
-    
     
 		
 };

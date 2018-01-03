@@ -9,6 +9,13 @@ void ofApp::setup(){
     
     //画面を更新せず、加算合成する
     ofSetBackgroundAuto(false);
+    
+    mesh.setMode(OF_PRIMITIVE_POINTS);
+    gui.setup();
+    gui.add(size.setup("pint size", 2.0, 0.0, 4.0));
+    gui.add(pointAlpha.setup("pint alpha", 5, 0, 63));
+    gui.add(bgAlpha.setup("background alpha", 5, 0, 31));
+    
   }
 
 //--------------------------------------------------------------
@@ -18,35 +25,30 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    //フェードアウト
-    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    ofSetColor(0, 0, 0, 23);
+   
+    ofSetColor(0, bgAlpha);
     ofRect(0, 0, ofGetWidth(), ofGetHeight());
-    
-    //色を設定
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
-    ofSetColor(255);
-    
-    //RandomWalkerを1000表示
-   for (int i = 0; i < 1000; i++) {
-        walker[i].draw();
-    }
-    
-    //RandomWalkerを100表示
-    mesh.setMode(OF_PRIMITIVE_POINTS);
+    ofSetColor(255, pointAlpha);
     mesh.clear();
-    for (int j = 0; j < 5; j++) {
-        for (int i = 0; i < walkerNum; i++) {
-            walker[i].update();
-            mesh.addVertex(ofVec3f(walker[i].position.x, walker[i].position.y));
-            mesh.addColor(ofFloatColor(0.1, 0.1, 0.1));
-        }
+    glPointSize(size);
+    
+   for (int i = 0; i < NUM; i++) {
+        walker[i].draw();
+       ofVec3f pos = ofVec3f(walker[i].position.x,
+                             walker[i].position.y,
+                             0);
+       
+       mesh.addVertex(pos);
     }
     mesh.draw();
+    gui.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    for(int i = 0; i < NUM; i++){
+        walker[i].position.set(ofGetWidth()/2, ofGetHeight()/2);
+    }
 
 }
 
@@ -72,7 +74,7 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    for (int i = 0; i < walkerNum; i++) {
+    for (int i = 0; i < NUM; i++) {
         walker[i].position.x = x;
         walker[i].position.y = y;
     }

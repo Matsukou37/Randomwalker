@@ -5,8 +5,8 @@ class RandomWalker {
     
 public:
     
-    RandomWalker();
-    void update();
+    RandomWalker(); // constructor
+ 
     void draw();
     
     ofVec2f position;

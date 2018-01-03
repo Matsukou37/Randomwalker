@@ -1,31 +1,20 @@
 #include "RandomWalker.h"
 
 RandomWalker::RandomWalker(){
+    position.x = ofGetWidth()/2;
+    position.y = ofGetHeight()/2;
     
-    //初期位置を、画面内にランダムに設定
-    position.x = ofGetWidth()/2.0;
-    position.y = ofGetHeight()/2.0;
-    
-    left = ofRandom(0.9, 1.0);
-    right = ofRandom(0.9, 1.0);
-    top = ofRandom(0.9, 1.0);
-    bottom = ofRandom(0.9, 1.0);
-    
-}
-
-void RandomWalker::update(){
-    //上下左右同じ確率でランダムに移動
-    position.x += ofRandom(-left, right);
-    position.y += ofRandom(-top, bottom);
+    left = ofRandom(1.0);
+    right = ofRandom(1.0);
+    top = ofRandom(1.0);
+    bottom = ofRandom(1.0);
     
 }
 
 void RandomWalker::draw(){
+    position.x += ofRandom(-left, right);
+    position.y += ofRandom(-top, left);
    
-    // 10回くりかえし
-      for (int i = 0; i < 10; i++) {
-        
-    
         // 画面からはみ出たら、反対側から出現
         if (position.x < 0) {
             position.x = ofGetWidth();
@@ -40,8 +29,5 @@ void RandomWalker::draw(){
             position.y = 0;
         }
     
-        //円を描く
-       // ofDrawCircle(position.x, position.y, 1);
-    }
 }
 
